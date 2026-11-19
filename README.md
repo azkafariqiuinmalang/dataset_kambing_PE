@@ -12,6 +12,7 @@ Data dalam repositori ini adalah **data sintetis** hasil simulasi berbasis agen 
 - Setiap fase: 12 kandang × 2 periode × 3 kambing
 - Satu kali pembangkitan penuh memanggil `RAND()` sebanyak 1.296 kali
 - Dataset utama adalah satu realisasi yang dibekukan sebagai nilai tetap
+- Kestabilan diperiksa dengan 100 replikasi pembangkitan ulang (benih acak 2026)
 
 ## Isi repositori
 
@@ -19,8 +20,8 @@ Data dalam repositori ini adalah **data sintetis** hasil simulasi berbasis agen 
 |---|---|
 | `data/DATASET-FINAL.xlsx` | Buku kerja pembangkitan. Lembar `Parameter`, `Ransum`, `Pemberian_Pakan`, `Individu`, dan lembar fase berisi rumus `RAND()` yang masih aktif. Lembar `Latih_Individu_*` dan `Uji_Individu_*` berisi dataset utama yang sudah dibekukan dan dipakai pada artikel (gabungan keduanya = 72 kambing per fase). |
 | `hasil/Analisis_Seluruh_Kambing_-_Lima_Model.xlsx` | Hasil regresi lima model (M1–M5) pada seluruh 72 kambing per fase. |
-| `kode/uji_kestabilan_50.py` | Skrip Python yang menjalankan ulang rumus pembangkitan sebanyak 50 replikasi (benih acak 2026) dan membentuk M1 serta M4 pada setiap replikasi. |
-| `hasil/Uji_Kestabilan_50_Pembangkitan.xlsx` | Keluaran skrip: 50 dataset lengkap (`Rep01`–`Rep50`), ringkasan regresi per replikasi, dan statistik ringkas. Setiap lembar `Rep` memuat rumus `LINEST` Excel untuk memeriksa hasil Python. |
+| `kode/uji_kestabilan_100.py` | Skrip Python yang menjalankan ulang rumus pembangkitan sebanyak 100 replikasi (benih acak 2026) dan membentuk M1 serta M4 pada setiap replikasi. |
+| `hasil/Uji_Kestabilan_100_Pembangkitan.xlsx` | Keluaran skrip: 100 dataset lengkap (`Rep001`–`Rep100`), ringkasan regresi per replikasi, statistik ringkas, dan lembar `Deskriptif_Data` berisi rerata dan simpangan baku setiap variabel per fase dari 100 replikasi. Setiap lembar `Rep` memuat rumus `LINEST` Excel untuk memeriksa hasil Python. |
 
 **Catatan:** buku kerja `DATASET-FINAL.xlsx` masih berisi rumus `RAND()` aktif. Membuka dan menghitung ulangnya (misalnya menekan F9) akan menghasilkan undian baru pada lembar berumus, tetapi **tidak** mengubah dataset utama di lembar `Latih_Individu_*` dan `Uji_Individu_*`.
 
@@ -42,10 +43,10 @@ Kebutuhan: Python 3.9+ dengan `numpy`, `pandas`, dan `scipy`.
 
 ```bash
 pip install numpy pandas scipy
-python kode/uji_kestabilan_50.py
+python kode/uji_kestabilan_100.py
 ```
 
-Skrip memakai benih acak 2026, sehingga setiap kali dijalankan akan menghasilkan 50 replikasi yang sama persis. Urutan pengundian di Python berbeda dari Excel, jadi replikasi ini memakai rumus dan parameter yang sama dengan buku kerja, tetapi bukan salinan hasil perhitungan ulang di Excel.
+Skrip memakai benih acak 2026, sehingga setiap kali dijalankan akan menghasilkan 100 replikasi yang sama persis. Urutan pengundian di Python berbeda dari Excel, jadi replikasi ini memakai rumus dan parameter yang sama dengan buku kerja, tetapi bukan salinan hasil perhitungan ulang di Excel.
 
 ## Lisensi
 
